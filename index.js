@@ -1,8 +1,6 @@
 
-import mongoose from "mongoose";
-import mongodb from "mongodb";
-//localhost:27017/${db};
-//localhost:27017/tp5;
+import mongoose from "mongoose"
+import mongodb from "mongodb"
 const URI ="mongodb://localhost:27017/tp5"
 
 const MongoDBbooks = {
