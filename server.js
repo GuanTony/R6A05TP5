@@ -1,35 +1,18 @@
-import Fastify from "fastify"
-// import fastifyBasicAuth from "@fastify/basic-auth"
-import fs from 'node:fs'
-import MongoDBbooks from '../config/index.js';
+const fastify = require('fastify')({ logger: true });
+const routes = require('./routes');
 
-const port = 3000;
-// const authenticate = {realm: 'Westeros'}
+// Configuration MongoDB ici
 
-const fastify = Fastify({
-    logger: true,
-    https: {
-        key: fs.readFileSync("config/server.key"),
-        cert: fs.readFileSync("config/server.crt")
+fastify.register(routes);
+
+const start = async () => {
+    try {
+        await fastify.listen({ port: 3000 });
+        fastify.log.info(`server listening on ${fastify.server.address().port}`);
+    } catch (err) {
+        fastify.log.error(err);
+        process.exit(1);
     }
+};
 
-})
-
-fastify.get('/', function (request, reply) {
-    reply.send({ hello: 'world' })
-})
-
-
-const start = async()=>{
-    try{
-        fastify.listen({port:3000,listenTextResolver: (address) => { return `Server is listening at ${address}` } });
-        MongoDBbooks.initialize();
-        MongoDBbooks.createSchema();
-    }
-    catch(error){
-        fastify.log.error(err)
-        process.exit(1)
-    }
-}
 start();
-
