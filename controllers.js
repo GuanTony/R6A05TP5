@@ -24,6 +24,6 @@ exports.createBook = async (request, reply) => {
         const savedBook = await book.save();
         reply.code(201).send(savedBook);
     } catch (err) {
-        reply.code(500).send(err); 
+        reply.code(500).send(err);
     }
 };
